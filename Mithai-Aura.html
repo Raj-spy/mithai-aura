@@ -1,0 +1,770 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mithai Aura</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=DM+Mono:wght@400;500&family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: phone-first column. Ticker, sticker pile and a huge lowercase headline up top; story-style progress bars for the quiz; result is two 9:16 aura slides meant to be screenshotted for IG. Single committed look: dark aubergine ground, drifting aura blobs, film grain, hard-shadow buttons. */
+:root {
+  color-scheme: dark;
+  --bg: #130A1C;
+  --bg2: #1F1230;
+  --fg: #FFF6EE;
+  --mute: #BCAACF;
+  --line: rgba(255,255,255,.18);
+  --hot: #FF4D8D;
+  --orange: #FF7A1A;
+  --butter: #FFE066;
+  --lav: #B79CFF;
+  --mint: #7CFFB2;
+  --ink: #1A0F24;
+  --f-display: 'Unbounded', 'Arial Black', system-ui, sans-serif;
+  --f-body: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --f-mono: 'DM Mono', ui-monospace, Menlo, monospace;
+  --grain: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 16px/1.45 var(--f-body);
+  min-height: 100%;
+  padding-block: 16px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::after { content: ""; position: fixed; inset: 0; z-index: 6; pointer-events: none; opacity: .1; mix-blend-mode: overlay; background-image: var(--grain); }
+
+/* aura blobs behind everything */
+.aura { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(64px); }
+.b1 { width: 340px; height: 340px; background: var(--hot); opacity: .5; top: -100px; left: -120px; animation: d1 19s ease-in-out infinite alternate; }
+.b2 { width: 300px; height: 300px; background: var(--orange); opacity: .42; top: 34%; right: -130px; animation: d2 23s ease-in-out infinite alternate; }
+.b3 { width: 380px; height: 380px; background: var(--lav); opacity: .34; bottom: -170px; left: 8%; animation: d3 27s ease-in-out infinite alternate; }
+@keyframes d1 { to { transform: translate(90px, 120px) scale(1.15); } }
+@keyframes d2 { to { transform: translate(-110px, -90px) scale(.9); } }
+@keyframes d3 { to { transform: translate(120px, -80px) scale(1.2); } }
+
+.wrap { position: relative; z-index: 1; max-width: 30rem; margin: 0 auto; min-width: 0; }
+.screen { display: flex; flex-direction: column; gap: 18px; min-width: 0; animation: rise .38s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+h1:focus, h2:focus { outline: none; }
+.mono { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--butter); margin: 0; }
+
+/* ticker */
+.ticker { overflow: hidden; border-block: 1px solid var(--line); padding: 8px 0; }
+.track { display: flex; gap: 28px; width: max-content; animation: marq 26s linear infinite; font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); white-space: nowrap; }
+@keyframes marq { to { transform: translateX(-50%); } }
+
+/* headline + stickers */
+h1 { font: 800 clamp(38px, 11.5vw, 54px)/1 var(--f-display); letter-spacing: -.035em; margin: 0; text-wrap: balance; }
+.hl { color: var(--butter); }
+.lede { font-size: 19px; line-height: 1.35; color: var(--fg); opacity: .86; margin: 0; max-width: 32ch; }
+.note { font-size: 14px; color: var(--mute); margin: 0; }
+.pile { display: flex; padding-left: 12px; }
+.pile .stk { flex: 1 1 0; min-width: 0; margin-left: -12px; max-width: 120px; }
+.pile .stk:nth-child(1) { transform: rotate(-9deg); }
+.pile .stk:nth-child(2) { transform: rotate(6deg) translateY(10px); }
+.pile .stk:nth-child(3) { transform: rotate(-4deg); }
+.pile .stk:nth-child(4) { transform: rotate(10deg) translateY(8px); }
+.stk svg { display: block; width: 100%; height: auto; filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 8px 12px rgba(0,0,0,.35)); }
+
+/* form + buttons */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.field input { width: 100%; background: rgba(255,255,255,.07); border: 1.5px solid var(--line); border-radius: 16px; padding: 16px; color: var(--fg); font: 600 19px var(--f-body); }
+.field input::placeholder { color: #8D7BA3; font-weight: 400; }
+.field input:focus-visible { outline: none; border-color: var(--butter); }
+.btn { appearance: none; border: 0; cursor: pointer; font: 800 17px var(--f-body); min-height: 54px; padding: 14px 24px; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; text-align: center; transition: transform .1s, box-shadow .1s; }
+.btn:focus-visible, .opt:focus-visible, .gbtn:focus-visible, .link:focus-visible { outline: 2px solid var(--butter); outline-offset: 3px; }
+.btn-primary { background: var(--butter); color: var(--ink); box-shadow: 4px 4px 0 var(--hot); }
+.btn-primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--hot); }
+.btn-ghost { background: transparent; color: var(--fg); border: 1.5px solid var(--line); font-weight: 600; }
+.btn-ghost:hover { border-color: var(--fg); }
+.link { appearance: none; background: none; border: 0; color: var(--mute); font: 600 15px var(--f-body); cursor: pointer; padding: 8px 0; align-self: flex-start; }
+
+/* quiz */
+.bars { display: flex; gap: 5px; }
+.bar { flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,.2); }
+.bar.done { background: var(--fg); }
+.bar.now { background: linear-gradient(90deg, var(--fg) 45%, rgba(255,255,255,.2) 45%); }
+.qrow { display: flex; justify-content: space-between; color: var(--mute); }
+.qtitle { font: 800 clamp(28px, 8.4vw, 37px)/1.08 var(--f-body); letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { appearance: none; text-align: left; width: 100%; display: flex; gap: 12px; align-items: center; padding: 15px 16px; background: rgba(255,255,255,.07); color: var(--fg); border: 1.5px solid var(--line); border-radius: 16px; font: 600 17px/1.3 var(--f-body); cursor: pointer; transition: transform .1s, border-color .15s; }
+.opt .k { flex: none; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.14); display: grid; place-items: center; font: 500 13px var(--f-mono); }
+.opt:hover { border-color: var(--fg); }
+.opt:active { transform: scale(.985); }
+.opt.chosen { background: var(--butter); color: var(--ink); border-color: var(--butter); box-shadow: 4px 4px 0 var(--hot); }
+.opt.chosen .k { background: var(--ink); color: var(--butter); }
+.opt:disabled { cursor: default; }
+
+/* guess */
+.guess-title { font: 800 clamp(30px, 9vw, 40px)/1.05 var(--f-display); letter-spacing: -.03em; margin: 0; text-wrap: balance; }
+.gg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.gbtn { appearance: none; text-align: left; display: flex; flex-direction: column; gap: 10px; padding: 12px 12px 14px; background: rgba(255,255,255,.07); border: 1.5px solid var(--line); border-radius: 18px; color: var(--fg); cursor: pointer; min-width: 0; transition: transform .1s, border-color .15s; }
+.gbtn:hover { border-color: var(--fg); }
+.gbtn:active { transform: scale(.97); }
+.gbtn .stk { width: 78%; max-width: 110px; }
+.gbtn span { font: 800 13px/1.1 var(--f-display); letter-spacing: -.02em; }
+
+/* loading */
+.load { padding-top: 28px; }
+.orb { width: 132px; height: 132px; border-radius: 50%; background: radial-gradient(circle at 32% 30%, #fff 0, var(--butter) 14%, var(--orange) 42%, var(--hot) 72%, rgba(255,77,141,0) 74%); box-shadow: 0 0 80px rgba(255,122,26,.55); animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.1); } }
+.pct { font: 800 clamp(72px, 24vw, 112px)/1 var(--f-display); letter-spacing: -.05em; margin: 0; font-variant-numeric: tabular-nums; }
+.read-line { font: 800 24px/1.2 var(--f-body); margin: 0; min-height: 58px; }
+
+/* result */
+.rhead { font: 800 clamp(28px, 8vw, 36px)/1.05 var(--f-display); letter-spacing: -.03em; margin: 0; }
+.slide-label { color: var(--mute); margin: 6px 0 -6px; }
+.card { position: relative; isolation: isolate; width: 100%; max-width: 25rem; margin-inline: auto; aspect-ratio: 9 / 16; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; gap: 14px; padding: 22px 20px 18px; color: #fff;
+  background:
+    radial-gradient(65% 42% at 14% 12%, var(--c1) 0%, transparent 70%),
+    radial-gradient(60% 45% at 94% 44%, var(--c2) 0%, transparent 70%),
+    radial-gradient(78% 50% at 26% 100%, var(--c3) 0%, transparent 72%),
+    var(--base); }
+.card.alt { background:
+    radial-gradient(62% 40% at 88% 8%, var(--c2) 0%, transparent 70%),
+    radial-gradient(60% 44% at 6% 52%, var(--c3) 0%, transparent 70%),
+    radial-gradient(75% 48% at 78% 100%, var(--c1) 0%, transparent 72%),
+    var(--base); }
+.card::before { content: ""; position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(10,5,18,0) 28%, rgba(10,5,18,.55) 100%); }
+.card::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: .22; mix-blend-mode: overlay; background-image: var(--grain); }
+.card > * { position: relative; z-index: 1; }
+.c-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.c-top span { min-width: 0; overflow-wrap: anywhere; }
+.pill { background: rgba(10,5,18,.4); border-radius: 999px; padding: 5px 10px; }
+.c-hero { position: relative; display: flex; justify-content: flex-end; padding-right: 4px; }
+.c-hero .stk { width: 62%; transform: rotate(7deg); }
+.verdict { position: absolute; left: 0; top: 10px; transform: rotate(-6deg); font: 500 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); padding: 7px 11px; border-radius: 999px; max-width: 54%; line-height: 1.25; }
+.verdict.ok { background: var(--mint); }
+.verdict.bad { background: var(--hot); color: #fff; }
+.you-are { color: rgba(255,255,255,.85); margin: -4px 0 -8px; }
+.c-name { font: 800 clamp(32px, 10vw, 46px)/.98 var(--f-display); letter-spacing: -.035em; margin: 0; text-wrap: balance; overflow-wrap: anywhere; text-shadow: 0 2px 18px rgba(10,5,18,.35); }
+.c-tagline { font: 700 18px/1.25 var(--f-body); margin: 0; text-wrap: balance; }
+.panel { background: rgba(14,7,22,.5); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.16); border-radius: 18px; padding: 12px 14px; }
+.stats { display: flex; flex-direction: column; gap: 9px; }
+.stat { display: grid; grid-template-columns: 52px 1fr 26px; gap: 10px; align-items: center; font: 500 12px var(--f-mono); letter-spacing: .04em; }
+.track-b { height: 8px; border-radius: 4px; background: rgba(255,255,255,.2); overflow: hidden; }
+.fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--butter), #fff); }
+.stat .n { text-align: right; font-variant-numeric: tabular-nums; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pair .panel { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 10px 12px; }
+.pair .lbl { font: 500 10px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
+.pair .val { font: 800 15px/1.2 var(--f-body); }
+.c-foot { margin-top: auto; display: flex; justify-content: space-between; gap: 10px; opacity: .85; }
+.c-foot span { min-width: 0; overflow-wrap: anywhere; }
+
+.c-era-l { margin: 0 0 -8px; color: rgba(255,255,255,.85); }
+.era { font: 800 clamp(40px, 12.5vw, 56px)/.95 var(--f-display); letter-spacing: -.04em; margin: 0; text-wrap: balance; text-shadow: 0 2px 18px rgba(10,5,18,.35); }
+.flags { display: flex; flex-direction: column; }
+.flag { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 11px 0; border-top: 1px solid rgba(255,255,255,.16); }
+.flag:first-child { border-top: 0; padding-top: 2px; }
+.flag:last-child { padding-bottom: 2px; }
+.flag p { margin: 0; font: 600 15.5px/1.3 var(--f-body); }
+.chip { display: inline-block; font: 500 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; color: var(--ink); }
+.chip.g { background: var(--mint); }
+.chip.r { background: #FF6B6B; }
+.chip.t { background: var(--butter); }
+.lucky { display: flex; flex-wrap: wrap; gap: 8px; }
+.lk { display: inline-flex; align-items: center; gap: 7px; border: 1.5px solid rgba(255,255,255,.5); border-radius: 999px; padding: 6px 12px; font: 600 13px var(--f-body); background: rgba(14,7,22,.35); }
+.dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(255,255,255,.6); }
+.c-tag { font: 800 clamp(20px, 6vw, 24px)/1.12 var(--f-body); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+
+.actions { display: flex; flex-direction: column; gap: 12px; max-width: 25rem; width: 100%; margin: 6px auto 0; }
+.actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.actions-row .btn { flex: 1 1 130px; }
+.status { min-height: 22px; font-size: 14px; color: var(--butter); margin: 0; }
+
+#fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+
+@media (prefers-reduced-motion: reduce) {
+  .blob, .track, .orb, .screen { animation: none; }
+  .btn, .opt, .gbtn { transition: none; }
+}
+
+.card.third { background:
+    radial-gradient(60% 42% at 80% 10%, var(--c3) 0%, transparent 70%),
+    radial-gradient(62% 45% at 8% 46%, var(--c1) 0%, transparent 70%),
+    radial-gradient(76% 50% at 70% 100%, var(--c2) 0%, transparent 72%),
+    var(--base); }
+.c-tag.q { font: 800 clamp(24px, 7.4vw, 30px)/1.15 var(--f-body); text-shadow: 0 2px 18px rgba(10,5,18,.35); }
+.aurapts { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.aurapts .lbl { opacity: .75; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.aurapts b { font: 800 clamp(34px, 10vw, 46px)/1 var(--f-display); letter-spacing: -.04em; color: var(--butter); }
+.sharewrap { width: 100%; max-width: 25rem; margin-inline: auto; position: relative; min-width: 0; }
+.card.share { width: 400px; max-width: none; height: 711px; aspect-ratio: auto; margin: 0; gap: 7px; padding: 16px 16px 12px; transform-origin: top left; transform: scale(var(--k, 1)); background:
+    radial-gradient(65% 38% at 12% 8%, var(--c1) 0%, transparent 70%),
+    radial-gradient(60% 40% at 96% 40%, var(--c2) 0%, transparent 70%),
+    radial-gradient(78% 46% at 30% 100%, var(--c3) 0%, transparent 72%),
+    var(--base); }
+.sh-hero { display: flex; align-items: center; gap: 6px; }
+.sh-hero .stk { flex: none; width: 33%; transform: rotate(-6deg); }
+.sh-id { min-width: 0; }
+.sh-name { font: 800 28px/1 var(--f-display); letter-spacing: -.035em; margin: 0; overflow-wrap: anywhere; }
+.sh-tag { font: 700 13px/1.25 var(--f-body); margin: 5px 0 0; }
+.share .you-are { margin: 0 0 4px; }
+.share .panel { padding: 7px 11px; border-radius: 14px; }
+.aura2 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.aura2 .lbl { display: block; opacity: .75; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.aura2 b { font: 800 40px/1.05 var(--f-display); letter-spacing: -.04em; color: var(--butter); }
+.sh-rank { font-size: 11px; line-height: 1.3; text-align: right; max-width: 40%; }
+.mini { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+.ms { display: grid; grid-template-columns: 40px 1fr 22px; gap: 6px; align-items: center; font: 500 11px var(--f-mono); }
+.ms b { text-align: right; font-weight: 500; }
+.sh-truth { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+.sh-truth p { margin: 0; font: 600 13px/1.28 var(--f-body); }
+.val.sm { font-size: 12.5px; font-weight: 700; }
+.cta { background: var(--butter); color: var(--ink); font: 800 14px var(--f-body); text-align: center; padding: 9px; border-radius: 14px; box-shadow: 3px 3px 0 var(--hot); }
+.share .c-foot { margin-top: 0; }
+#sheet { position: fixed; inset: 0; z-index: 20; background: rgba(19,10,28,.94); overflow-y: auto; padding: 20px 16px 40px; }
+#sheet[hidden] { display: none !important; }
+.sheet-in { max-width: 26rem; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.sheet-imgs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; }
+.sheet-imgs img { height: 300px; width: auto; border-radius: 14px; flex: none; }
+</style>
+
+<div class="aura" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
+
+<main class="wrap">
+
+  <!-- intro -->
+  <section class="screen" id="s-intro" aria-labelledby="introTitle">
+    <div class="ticker" aria-hidden="true"><div class="track" id="track"></div></div>
+    <p class="eyebrow">diwali szn '26</p>
+    <div class="pile" id="pile" aria-hidden="true"></div>
+    <h1 id="introTitle" tabindex="-1">which mithai r u, <span class="hl">fr?</span></h1>
+    <p class="lede">6 sawaal. overthink mat kar. aura stats + ur 2027 era milega, no cap.</p>
+    <div class="field">
+      <label for="name">ur name</label>
+      <input id="name" type="text" maxlength="24" autocomplete="given-name" placeholder="ur name ya finsta handle">
+    </div>
+    <button class="btn btn-primary" id="start" type="button">lock in kar 🔒</button>
+    <p class="note">40 sec. no signup. card seedha ig pe share kar, gc ko tag kar.</p>
+  </section>
+
+  <!-- question -->
+  <section class="screen" id="s-q" hidden aria-labelledby="qTitle">
+    <div class="bars" id="bars" aria-hidden="true"></div>
+    <div class="qrow mono"><span id="qCount"></span><span>mithai aura</span></div>
+    <h2 class="qtitle" id="qTitle" tabindex="-1"></h2>
+    <div class="opts" id="opts"></div>
+    <button class="link" id="back" type="button">&larr; back</button>
+  </section>
+
+  <!-- guess -->
+  <section class="screen" id="s-guess" hidden aria-labelledby="gTitle">
+    <p class="eyebrow">before the reveal</p>
+    <h2 class="guess-title" id="gTitle" tabindex="-1">wait. guess first.</h2>
+    <p class="lede">tujhe kya lagta h tu kaunsi mithai h? no take-backs. galat nikla toh sabko bata denge 😭</p>
+    <div class="gg" id="gg"></div>
+  </section>
+
+  <!-- loading -->
+  <section class="screen load" id="s-load" hidden aria-live="polite">
+    <div class="orb" aria-hidden="true"></div>
+    <p class="pct" id="pct">0%</p>
+    <p class="eyebrow">aura loading</p>
+    <p class="read-line" id="readLine">scanning ur vibes…</p>
+  </section>
+
+  <!-- result -->
+  <section class="screen" id="s-result" hidden aria-labelledby="rHead">
+    <p class="eyebrow">results aa gaye 👀</p>
+    <h2 class="rhead" id="rHead" tabindex="-1">ur aura, decoded.</h2>
+
+    <p class="slide-label mono">slide 1/4 · ur main card</p>
+    <article class="card" id="card1">
+      <div class="c-top mono"><span class="pill">mithai aura</span><span id="rHandle"></span></div>
+      <div class="c-hero"><span class="verdict" id="rVerdict"></span><div class="stk" id="rArt"></div></div>
+      <p class="you-are mono">u r a</p>
+      <h3 class="c-name" id="rSweet"></h3>
+      <p class="c-tagline" id="rTag"></p>
+      <div class="panel stats" id="rStats"></div>
+      <div class="pair">
+        <div class="panel"><span class="lbl">ur mithai bestie</span><span class="val" id="rBestie"></span></div>
+        <div class="panel"><span class="lbl">ur situationship</span><span class="val" id="rSit"></span></div>
+      </div>
+      <div class="c-foot mono"><span>diwali '26</span><span>which mithai r u, fr?</span></div>
+    </article>
+
+    <p class="slide-label mono">slide 2/4 · ur 2027 era</p>
+    <article class="card alt" id="card2">
+      <div class="c-top mono"><span class="pill">2027 forecast</span><span id="rHandle2"></span></div>
+      <p class="c-era-l mono">ur 2027 era</p>
+      <h3 class="era" id="rEra"></h3>
+      <div class="panel flags">
+        <div class="flag"><span class="chip g">green flag</span><p id="rF0"></p></div>
+        <div class="flag"><span class="chip r">red flag</span><p id="rF1"></p></div>
+        <div class="flag"><span class="chip t">plot twist</span><p id="rF2"></p></div>
+      </div>
+      <div class="lucky">
+        <span class="lk">lucky no. <b id="rNum"></b></span>
+        <span class="lk"><i class="dot" id="rDot"></i><span id="rColour"></span></span>
+        <span class="lk" id="rDay"></span>
+      </div>
+      <p class="c-tag" id="rFriend"></p>
+      <div class="c-foot mono"><span>mithai aura · diwali '26</span><span id="rHandle3"></span></div>
+    </article>
+
+    <p class="slide-label mono">slide 3/4 · sach bol diya isne 😭</p>
+    <article class="card third" id="card3">
+      <div class="c-top mono"><span class="pill">sach bol diya isne</span><span id="rHandle4"></span></div>
+      <p class="c-era-l mono">tere baare mein 3 sach</p>
+      <div class="panel flags" id="rTruths"></div>
+      <p class="c-era-l mono" style="margin-bottom:-6px">ghar wale review</p>
+      <h3 class="c-tag q" id="rReview"></h3>
+      <div class="pair">
+        <div class="panel"><span class="lbl">ur reel audio</span><span class="val" id="rAudio"></span></div>
+        <div class="panel"><span class="lbl">ur 2am text</span><span class="val" id="rText"></span></div>
+      </div>
+      <div class="c-foot mono"><span>which mithai r u, fr?</span><span>mithai aura · diwali ’26</span></div>
+    </article>
+
+    <p class="slide-label mono">slide 4/4 · ye wala share kar 🔥</p>
+    <div class="sharewrap" id="shareWrap">
+    <article class="card share" id="card4">
+      <div class="c-top mono"><span class="pill">mithai aura · diwali ’26</span><span id="rHandle5"></span></div>
+      <div class="sh-hero"><div class="stk" id="rArt4"></div><div class="sh-id"><p class="you-are mono">u r a</p><h3 class="sh-name" id="rName4"></h3><p class="sh-tag" id="rTag4"></p></div></div>
+      <div class="panel aura2"><div><span class="lbl mono">total aura points</span><b id="rAura4"></b></div><span class="mono sh-rank" id="rRank4"></span></div>
+      <div class="panel mini" id="rStats4"></div>
+      <div class="pair">
+        <div class="panel"><span class="lbl">ur 2027 era</span><span class="val" id="rEra4"></span></div>
+        <div class="panel"><span class="lbl">ur mithai bestie</span><span class="val" id="rBestie4"></span></div>
+      </div>
+      <div class="panel sh-truth"><span class="chip t">sach bol diya isne 😭</span><p id="rTruth4"></p><p id="rTruthB4"></p></div>
+      <div class="panel sh-truth"><span class="chip g">ghar wale review</span><p id="rReview4"></p></div>
+      <div class="pair">
+        <div class="panel"><span class="lbl">ur reel audio</span><span class="val sm" id="rAudio4"></span></div>
+        <div class="panel"><span class="lbl">ur 2am text</span><span class="val sm" id="rText4"></span></div>
+      </div>
+      <div class="cta">kahan se kiya? 👀 link sticker dabake dekh</div>
+      <div class="c-foot mono"><span>which mithai r u, fr?</span><span>tag ur gc</span></div>
+    </article>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="ig" type="button">ig story pe daal 📲</button>
+      <button class="btn btn-ghost" id="wa" type="button">whatsapp pe bhej</button>
+      <div class="actions-row">
+        <button class="btn btn-ghost" id="copy" type="button">copy caption</button>
+        <button class="btn btn-ghost" id="again" type="button">run it back</button>
+      </div>
+      <p class="status" id="status" role="status"></p>
+      <p class="note">sirf slide 4 share hota h: usme teeno cards ka best aata h. ig dabate hi share sheet khulegi, wahan instagram stories pe tap kar.</p>
+    </div>
+  </section>
+
+</main>
+<div id="sheet" hidden role="dialog" aria-modal="true" aria-label="share on instagram">
+  <div class="sheet-in">
+    <p class="eyebrow">card ready h. ab ig pe daal 🚀</p>
+    <p class="note" id="sheetNote">card pe long-press → “save image”. phir “open instagram” dabake story mein gallery se add kar. caption already copy ho gaya h.</p>
+    <div class="sheet-imgs" id="sheetImgs"></div>
+    <a class="btn btn-primary" id="openIg" href="instagram://story-camera">open instagram</a>
+    <div class="actions-row"><button class="btn btn-ghost" id="dlAll" type="button">download</button><button class="btn btn-ghost" id="copy2" type="button">copy caption</button></div>
+    <button class="link" id="closeSheet" type="button">close</button>
+  </div>
+</div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ORDER = ['k', 'g', 'j', 'r', 's', 'm'];
+
+  var SW = {
+    k: { name: 'kaju katli', tag: "it’s giving expensive taste, zero effort 💅", era: 'quiet luxury era',
+      stats: [92, 18, 41, 88], colour: 'silver mint', swatch: '#CFF5E7', bestie: 'g', sit: 'j',
+      flags: ['ur rate card finally upar jaata h. client: “haan bhai, done.”', 'seen-zone ka CEO. jinko ignore kiya, unhe pata chal gaya.', 'ex ur story dekhega. 2nd ID se. calm reh.'],
+      friend: 'tag that bestie jo 7am pe bhi photo-ready h.',
+      review: '“beta kitna sundar lagta h… bas phone kam chalaya kar.”', audio: 'slowed + reverb. obviously.', text: '“nahi yaar aaj mood nahi” (3 hrs baad: 12 outfit pics)',
+      pal: { base: '#1E1836', c1: '#C9F5E4', c2: '#B79CFF', c3: '#7FD6FF' } },
+    g: { name: 'gulab jamun', tag: "it’s giving soft heart, strong aura 🥹", era: 'soft life era',
+      stats: [74, 22, 63, 90], colour: 'cherry cola', swatch: '#D91E3C', bestie: 'r', sit: 'k',
+      flags: ['ur softness = promotion. boss march mein naam lega, fr.', '“i’m fine” bolna band kar. bestie ko sab pata h.', 'purani dosti 2am maggi pe wapas jud jaati h.'],
+      friend: 'tag that bestie jo bolti h “bas ek aur kha lo”.',
+      review: '“sabse sanskari bachcha h. bas thoda apne liye bhi jee.”', audio: 'arijit ka koi sad version. rona allowed.', text: '“khana khaya?” (6 logo ko bheja, 0 reply)',
+      pal: { base: '#240A12', c1: '#FF3B4A', c2: '#FF8A3D', c3: '#B0125B' } },
+    j: { name: 'jalebi', tag: "it’s giving chaos, but make it iconic 🌀", era: 'plot twist era',
+      stats: [70, 96, 77, 71], colour: 'molten orange', swatch: '#FF8A00', bestie: 'm', sit: 'r',
+      flags: ['jo side hustle delete karne wale the, june tak paise dega.', 'plan 4 baar badla. gc ne mute maar diya.', '“chal na bhai trip” actually ho jayega. bag halka rakh.'],
+      friend: 'tag that bestie ka plan din mein 4 baar badalta h.',
+      review: '“ye bachcha kab settle hoga?” (mummy, secretly proud)', audio: 'koi random 2x speed remix. dimaag band.', text: '“bhai ek idea h… ruk, 5 min mein batata hu” (4 hrs ago)',
+      pal: { base: '#261003', c1: '#FF8A00', c2: '#FFD23F', c3: '#FF4D8D' } },
+    r: { name: 'rasgulla', tag: "it’s giving calm in a gc full of chaos 🧘", era: 'healing arc era',
+      stats: [61, 12, 52, 84], colour: 'milk pink', swatch: '#FFB3D1', bestie: 'g', sit: 's',
+      flags: ['slow project finally land karega. sabr hi strategy thi.', 'apni feelings ko seen pe chhod rakha h. reply kar.', 'poora week zero drama. suspicious. enjoy.'],
+      friend: 'tag that bestie jo light jaane pe bhi chill rehta h.',
+      review: '“bahut shaant bachcha h. kabhi kuch bolta hi nahi.”', audio: 'baarish ki awaaz + adrak wali chai.', text: '“haan sab theek h” (theek nahi h)',
+      pal: { base: '#251D3E', c1: '#FFEFD0', c2: '#FFB3D1', c3: '#9FD3FF' } },
+    s: { name: 'soan papdi', tag: "it’s giving underrated, re-gifted, still undefeated 👑", era: 'glow up era',
+      stats: [38, 31, 88, 97], colour: 'butter gold', swatch: '#FFD166', bestie: 'k', sit: 'm',
+      flags: ['ur quiet effort pe finally loud taareef. promo talk H2 mein.', 'log ur energy re-gift karte rehte h. boundaries bana.', 'koi bolega “mujhe toh hamesha pasand tha.” memes se pehle se.'],
+      friend: 'tag that bestie jo soan papdi ke jokes pe hans ke bhi ek tukda le leta h.',
+      review: '“tu toh bas… hai na. achha h.” (desi mein = i love u)', audio: 'wo gaana jo sirf tujhe pasand h. 0 reels.', text: '“sorry late reply 🙈” (3 din baad)',
+      pal: { base: '#2A1C08', c1: '#FFD166', c2: '#FFB08A', c3: '#B9722F' } },
+    m: { name: 'motichoor ladoo', tag: "it’s giving main character at every function 🎤", era: 'main character era',
+      stats: [95, 82, 58, 80], colour: 'sunset pink', swatch: '#FF4DB8', bestie: 'j', sit: 'k',
+      flags: ['bade stage pe naam aayega. haan bol, overthink mat kar.', 'main character energy, 0% battery. so ja bestie.', 'ek shaadi 2027 badal degi. pehle naach, phir soch.'],
+      friend: 'tag that bestie jo dance floor pe pehla step leta h.',
+      review: '“ye toh stage pe hi paida hua tha.” (har chacha, every function)', audio: 'baraat ka dhol. loop pe.', text: '“bhai 5 min mein pahunch gaya” (abhi ghar pe h)',
+      pal: { base: '#26102B', c1: '#FF7A1A', c2: '#FF4DB8', c3: '#7A5CFF' } }
+  };
+
+  var TR = {
+    k: ['reply 2 ghante baad karta h, par “seen” pe bhi aesthetic rakhta h.', 'photo dump mein 14 pics, bas 3 mein khud ko pasand aata h.', '“aaj bahar nahi jaunga” bolke best outfit pehen leta h.'],
+    g: ['doosron ke liye 5 baar “koi nahi” bolta h, apne liye ek baar bhi nahi.', '2am pe bestie ko “tu theek h?” bhejta h. khud ko nahi puchta.', 'har gc ka mummy/papa h. bina role mile.'],
+    j: ['11pm pe “new business idea” pe 4 tabs khol leta h. 12 tak sab band.', '“last time” bolke wahi cheez 3 baar karta h.', 'gc mein plan banata h aur khud late pahunchta h.'],
+    r: ['sab dekhta h, kuch nahi bolta. gc ka CCTV.', '“sab theek h” bolke 3 din overthink karta h.', 'ghar pe chill hi best lagta h. aur isme koi sharam nahi.'],
+    s: ['sabka kaam kar deta h, credit kisi aur ko mil jaata h.', 'apni reel kabhi nahi daalta, par sabki like karta h.', 'underrated h, ye pata bhi h. thoda bura lagta h (sach).'],
+    m: ['photo mein baaki sabko crop karke khud ko zoom karta h.', '“bas 5 min” bolke party mein sabse pehle aur sabse last tak rehta h.', 'ek reel dekhta h, 5 min mein khud ka version bana leta h.']
+  };
+  var SITE = 'https://claude.ai/artifact/5mfBxEXQxVk1mSzKos3qRC';
+
+  var QS = [
+    { q: "ig ka sach: tu kaunsa banda/bandi h? 👀", o: [
+      { t: "story daalke 47 baar “viewed by” check karta/karti hu", s: { m: 2, j: 2 } },
+      { t: "sabki story chupchap dekhta/dekhti hu. like? kabhi nahi", s: { r: 3, s: 1 } },
+      { t: "close friends list = meri asli personality 🤫", s: { g: 3, k: 1 } },
+      { t: "2 mahine mein 1 post. par 3 ghante edit ke baad", s: { k: 3, s: 1 } } ] },
+    { q: "gc mein trip plan ban raha h. tu kaun?", o: [
+      { t: "“chal chalte h” bolke sabse pehle advance bhi bhej diya", s: { g: 3, m: 1 } },
+      { t: "color-coded excel sheet bhej di. itinerary ready 💅", s: { k: 3, s: 1 } },
+      { t: "“bhai kal nikal rahe?” — last minute wala 😭", s: { j: 3, m: 1 } },
+      { t: "“tum log decide karo” (andar se sabko judge kar raha/rahi)", s: { r: 3, s: 1 } } ] },
+    { q: "diwali pe chachi: “beta, package kitna h?” ur reply:", o: [
+      { t: "“bas chachi sab theek.” plate mein gujiya. conflict deleted", s: { g: 3, r: 1 } },
+      { t: "“linkedin pe dekh lijiye 😌” rehearsed pitch. slay", s: { k: 3, m: 1 } },
+      { t: "“sharma ji ke bete ka batao na” — topic change, ruthless", s: { j: 3, s: 1 } },
+      { t: "“washroom jaake aata hu” — 40 min gayab", s: { r: 2, s: 2 } } ] },
+    { q: "raat ke 2 baje ka screen time kahan jaata h?", o: [
+      { t: "reels. “bas ek aur” = subah 4 baje tak", s: { j: 2, m: 2 } },
+      { t: "kisi ki 2019 wali profile. accidental like ka risk 😭", s: { j: 3, s: 1 } },
+      { t: "notes app mein dukhi quotes. “aaj kuch feel hua”", s: { g: 2, r: 2 } },
+      { t: "playlist: “songs for my villain era” 😈", s: { k: 2, m: 2 } } ] },
+    { q: "gift box mila. ur honest reaction:", o: [
+      { t: "foran khola. sabr? kaun si app h", s: { j: 3, m: 1 } },
+      { t: "brand dekha, ribbon bachaya, phir slow unbox", s: { k: 3, g: 1 } },
+      { t: "kal hi re-gift. kisi ko pata nahi chalega 🤫", s: { s: 3, r: 1 } },
+      { t: "khol ke sabko bola: “aao khao, sab milke”", s: { g: 2, m: 2 } } ] },
+    { q: "diwali party, raat ke 11 baje. tu kahan h?", o: [
+      { t: "DJ ke paas: “bhaiya wo wala gaana laga do”", s: { m: 3, j: 1 } },
+      { t: "corner mein chai pe deep talk ka thekedar", s: { r: 3, s: 1 } },
+      { t: "sabki photo kheench raha/rahi. apni ek bhi nahi", s: { g: 2, s: 2 } },
+      { t: "outfit 3 baar badla. last mein pehla wala hi pehna", s: { k: 3, m: 1 } } ] }
+  ];
+
+  /* ---------- sticker art ---------- */
+  var uid = 0;
+  function star(cx, cy, r) { return '<path d="M' + cx + ' ' + (cy - r) + 'Q' + cx + ' ' + cy + ' ' + (cx + r) + ' ' + cy + 'Q' + cx + ' ' + cy + ' ' + cx + ' ' + (cy + r) + 'Q' + cx + ' ' + cy + ' ' + (cx - r) + ' ' + cy + 'Q' + cx + ' ' + cy + ' ' + cx + ' ' + (cy - r) + 'Z" fill="#fff"/>'; }
+  function wrap(b) { return '<svg viewBox="0 8 200 126" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + b + star(16, 30, 10) + star(188, 54, 8) + star(176, 122, 11) + '</svg>'; }
+  function shine(x, y, r) { return '<ellipse cx="' + (x - r * .3) + '" cy="' + (y - r * .38) + '" rx="' + (r * .3) + '" ry="' + (r * .15) + '" fill="#fff" opacity=".35"/>'; }
+
+  var ART = {
+    k: function (u) {
+      function d(x, y, s) {
+        return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')"><polygon points="50,75 100,110 150,75 150,85 100,120 50,85" fill="#8EA19F"/><polygon points="100,40 150,75 100,110 50,75" fill="url(#kg' + u + ')" stroke="#9FB2B0" stroke-width="1.5"/><polygon points="100,48 128,68 112,70 90,58" fill="#fff" opacity=".4"/><ellipse cx="100" cy="76" rx="9" ry="3.2" fill="#6FA050" transform="rotate(-25 100 76)"/></g>';
+      }
+      return '<defs><linearGradient id="kg' + u + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F7F6"/><stop offset="1" stop-color="#B7C5C4"/></linearGradient></defs>' + d(-30, -10, .78) + d(10, -4, 1);
+    },
+    g: function (u) {
+      var balls = [[76, 84, 23], [124, 84, 23], [100, 64, 23]].map(function (b) {
+        return '<circle cx="' + b[0] + '" cy="' + b[1] + '" r="' + b[2] + '" fill="url(#gg' + u + ')"/>' + shine(b[0], b[1], b[2]);
+      }).join('');
+      return '<defs><radialGradient id="gg' + u + '" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#8A3B1E"/><stop offset="1" stop-color="#3E1409"/></radialGradient></defs>' +
+        '<path d="M38 88 Q100 168 162 88 Z" fill="#C9902F"/><ellipse cx="100" cy="88" rx="62" ry="11" fill="#B85A12"/>' + balls +
+        '<path d="M38 88 Q100 168 162 88 Q100 104 38 88 Z" fill="#D9A441"/><path d="M38 88 Q100 168 162 88" fill="none" stroke="#F3C969" stroke-width="2"/>';
+    },
+    j: function () {
+      var p = '', i, t, r;
+      for (i = 0; i <= 190; i++) {
+        t = i / 190 * 3.4 * 2 * Math.PI; r = 5 + t * 2.35;
+        p += (i ? 'L' : 'M') + (100 + r * Math.cos(t)).toFixed(1) + ' ' + (72 + r * .78 * Math.sin(t)).toFixed(1) + ' ';
+      }
+      return '<path d="' + p + '" fill="none" stroke="#E36F0F" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="' + p + '" fill="none" stroke="#FF9B2E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="' + p + '" transform="translate(-1.5 -2)" fill="none" stroke="#FFD08A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>';
+    },
+    r: function (u) {
+      var balls = [[100, 68, 25], [72, 98, 25], [128, 98, 25]].map(function (b) {
+        return '<circle cx="' + b[0] + '" cy="' + b[1] + '" r="' + b[2] + '" fill="url(#rg' + u + ')"/>' + shine(b[0], b[1], b[2]);
+      }).join('');
+      return '<defs><radialGradient id="rg' + u + '" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#EBDDC3"/></radialGradient></defs><ellipse cx="100" cy="118" rx="62" ry="10" fill="#E9C77A" opacity=".6"/>' + balls;
+    },
+    s: function () {
+      var front = '', top = '', i, y, l, rr;
+      for (i = 0; i < 22; i++) { var x = 62 + i * 3.5; front += '<line x1="' + x + '" y1="72" x2="' + (x + (i % 3 - 1) * .8) + '" y2="114" stroke="#B98B2E" stroke-opacity=".5" stroke-width=".9"/>'; }
+      for (i = 0; i < 6; i++) { y = 54 + i * 3; l = 60 + (70 - y) * (20 / 18); rr = 140 + (70 - y) * (20 / 18); top += '<line x1="' + l.toFixed(1) + '" y1="' + y + '" x2="' + rr.toFixed(1) + '" y2="' + y + '" stroke="#B98B2E" stroke-opacity=".45" stroke-width=".9"/>'; }
+      return '<g transform="translate(0 -2)"><polygon points="140,70 160,52 160,96 140,114" fill="#C9A04A"/><rect x="60" y="70" width="80" height="44" fill="#E9C46A"/>' + front +
+        '<polygon points="60,70 80,52 160,52 140,70" fill="#F3D98B"/>' + top +
+        '<rect x="94" y="70" width="12" height="44" fill="#F0357B"/><polygon points="94,70 106,70 126,52 114,52" fill="#D82A69"/>' +
+        '<ellipse cx="102" cy="56" rx="11" ry="5.5" fill="#F0357B" stroke="#B01F55" transform="rotate(-18 102 56)"/><ellipse cx="118" cy="56" rx="11" ry="5.5" fill="#F0357B" stroke="#B01F55" transform="rotate(18 118 56)"/><circle cx="110" cy="57" r="4" fill="#B01F55"/></g>';
+    },
+    m: function (u) {
+      function lad(cx, cy, r, seed) {
+        var s = seed, o = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="url(#mg' + u + ')"/>', n = Math.round(r * 1.6), i, a, d;
+        function rnd() { s = (s * 16807) % 2147483647; return s / 2147483647; }
+        for (i = 0; i < n; i++) { a = rnd() * 6.283; d = Math.sqrt(rnd()) * (r - 3); o += '<circle cx="' + (cx + d * Math.cos(a)).toFixed(1) + '" cy="' + (cy + d * Math.sin(a)).toFixed(1) + '" r="3.1" fill="#FFC96B" stroke="#D96F10" stroke-width=".6"/>'; }
+        return o + shine(cx, cy, r);
+      }
+      return '<defs><radialGradient id="mg' + u + '" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#FFB347"/><stop offset="1" stop-color="#E27A14"/></radialGradient></defs>' + lad(68, 98, 26, 7) + lad(134, 96, 28, 11) + lad(101, 70, 32, 3) +
+        '<ellipse cx="101" cy="40" rx="8" ry="3" fill="#6FA050" transform="rotate(-20 101 40)"/>';
+    }
+  };
+  function sticker(key) { uid++; return wrap(ART[key](uid)); }
+
+  /* ---------- state ---------- */
+  var name = '', idx = 0, answers = [], guess = '', lastText = '', shots = [], finalShot = null;
+  var screens = ['s-intro', 's-q', 's-guess', 's-load', 's-result'];
+
+  function show(id, focusId) {
+    screens.forEach(function (s) { $(s).hidden = (s !== id); });
+    window.scrollTo(0, 0);
+    var f = $(focusId || id);
+    if (f) { try { f.focus({ preventScroll: true }); } catch (e) {} }
+  }
+  function hash(str) {
+    var h = 2166136261, i;
+    for (i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  }
+
+  function buildStatic() {
+    var items = ['mithai szn', 'aura check', 'delulu is the solulu', 'locked in', 'no cap', "diwali '26", 'ghar wale approved'], t = '', i;
+    for (i = 0; i < 2; i++) t += items.map(function (x) { return '<span>' + x + '</span>'; }).join('') + '';
+    $('track').innerHTML = t;
+    $('pile').innerHTML = ['k', 'j', 'g', 'm'].map(function (k) { return '<div class="stk">' + sticker(k) + '</div>'; }).join('');
+    var gg = $('gg');
+    ORDER.forEach(function (k) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'gbtn';
+      b.innerHTML = '<div class="stk">' + sticker(k) + '</div><span></span>';
+      b.lastChild.textContent = SW[k].name;
+      b.addEventListener('click', function () { guess = k; finish(); });
+      gg.appendChild(b);
+    });
+  }
+
+  function renderQ() {
+    var q = QS[idx], bars = '', i, box = $('opts');
+    for (i = 0; i < QS.length; i++) bars += '<span class="bar' + (i < idx ? ' done' : i === idx ? ' now' : '') + '"></span>';
+    $('bars').innerHTML = bars;
+    $('qCount').textContent = 'q' + (idx + 1) + '/' + QS.length;
+    $('qTitle').textContent = q.q;
+    box.innerHTML = '';
+    q.o.forEach(function (o, oi) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'opt';
+      var k = document.createElement('span'); k.className = 'k'; k.textContent = 'ABCD'.charAt(oi);
+      var t = document.createElement('span'); t.textContent = o.t;
+      b.appendChild(k); b.appendChild(t);
+      b.addEventListener('click', function () { choose(oi, b); });
+      box.appendChild(b);
+    });
+    $('back').hidden = (idx === 0);
+    show('s-q', 'qTitle');
+  }
+
+  function choose(oi, btn) {
+    Array.prototype.forEach.call($('opts').querySelectorAll('.opt'), function (b) { b.disabled = true; });
+    btn.classList.add('chosen');
+    answers[idx] = oi;
+    setTimeout(function () {
+      idx++;
+      if (idx < QS.length) renderQ(); else show('s-guess', 'gTitle');
+    }, RM ? 80 : 320);
+  }
+
+  function finish() {
+    var lines = ['vibes scan ho rahe h…', 'gc se puch rahe h…', 'delulu level check…', 'sharma ji ke bete se consult…', 'ho gaya. bas ek sec 🔥'];
+    var dur = RM ? 500 : 2900, t0 = performance.now();
+    show('s-load');
+    (function tick() {
+      var p = Math.min(1, (performance.now() - t0) / dur);
+      $('pct').textContent = Math.round(p * 100) + '%';
+      $('readLine').textContent = lines[Math.min(lines.length - 1, Math.floor(p * lines.length))];
+      if (p < 1) requestAnimationFrame(tick); else reveal(compute());
+    })();
+  }
+
+  function compute() {
+    var tot = { k: 0, g: 0, j: 0, r: 0, s: 0, m: 0 };
+    answers.forEach(function (oi, qi) { var sc = QS[qi].o[oi].s; for (var key in sc) tot[key] += sc[key]; });
+    var nm = name.trim().toLowerCase();
+    var h = hash(nm + answers.join(''));
+    var rank = ORDER.map(function (key, i) { return { key: key, v: tot[key] + ((i * 5 + h) % 6) / 100 }; }).sort(function (a, b) { return b.v - a.v; });
+    var top = rank[0].key;
+    var h2 = hash(top + nm + answers.join('-'));
+    var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    var months = ['jan', 'feb', 'march', 'april', 'may', 'june', 'july', 'aug', 'sept', 'oct', 'nov', 'dec'];
+    var stats = SW[top].stats.map(function (b, i) {
+      var v = b + (hash(top + nm + i) % 17) - 8;
+      return Math.max(3, Math.min(99, v));
+    });
+    return { top: top, stats: stats, num: (h2 % 99) + 1, aura: 1000 + (h2 % 9000), pct: 1 + ((h2 >>> 5) % 9), ti: h2 % 3, day: 'lucky day: ' + days[h2 % 7] + ' in ' + months[(h2 >>> 3) % 12] };
+  }
+
+  function reveal(r) {
+    var s = SW[r.top], nm = name.trim();
+    var handle = nm ? '@' + nm.toLowerCase().replace(/\s+/g, '') : '@ur.name';
+    ['rHandle', 'rHandle2', 'rHandle3', 'rHandle4', 'rHandle5'].forEach(function (id) { $(id).textContent = handle; });
+    ['card1', 'card2', 'card3', 'card4'].forEach(function (id) {
+      var c = $(id);
+      c.style.setProperty('--base', s.pal.base); c.style.setProperty('--c1', s.pal.c1);
+      c.style.setProperty('--c2', s.pal.c2); c.style.setProperty('--c3', s.pal.c3);
+    });
+    $('rArt').innerHTML = sticker(r.top);
+    $('rSweet').textContent = s.name;
+    $('rTag').textContent = s.tag;
+    var ok = (guess === r.top), v = $('rVerdict');
+    v.className = 'verdict ' + (ok ? 'ok' : 'bad');
+    v.textContent = ok ? 'u called it' : 'u said ' + SW[guess].name + '. delulu.';
+    var labels = ['rizz', 'chaos', 'delulu', 'aura'];
+    $('rStats').innerHTML = '';
+    r.stats.forEach(function (val, i) {
+      var row = document.createElement('div'); row.className = 'stat';
+      var a = document.createElement('span'); a.textContent = labels[i];
+      var tr = document.createElement('div'); tr.className = 'track-b';
+      var f = document.createElement('div'); f.className = 'fill'; f.style.width = val + '%'; tr.appendChild(f);
+      var n = document.createElement('span'); n.className = 'n'; n.textContent = val;
+      row.appendChild(a); row.appendChild(tr); row.appendChild(n);
+      $('rStats').appendChild(row);
+    });
+    $('rBestie').textContent = SW[s.bestie].name;
+    $('rArt4').innerHTML = sticker(r.top); $('rName4').textContent = s.name; $('rTag4').textContent = s.tag;
+    $('rAura4').textContent = '+' + r.aura.toLocaleString('en-IN'); $('rRank4').textContent = 'top ' + r.pct + '% of ur gc 😮‍💨';
+    $('rStats4').innerHTML = r.stats.map(function (v, i) { return '<div class="ms"><span>' + labels[i] + '</span><div class="track-b"><div class="fill" style="width:' + v + '%"></div></div><b>' + v + '</b></div>'; }).join('');
+    $('rEra4').textContent = s.era; $('rBestie4').textContent = SW[s.bestie].name;
+    $('rTruth4').textContent = '👀 tu wo insaan h jo ' + TR[r.top][r.ti]; $('rTruthB4').textContent = '💀 aur wo jo ' + TR[r.top][(r.ti + 1) % 3];
+    $('rReview4').textContent = s.review; $('rAudio4').textContent = s.audio; $('rText4').textContent = s.text;
+    $('rSit').textContent = SW[s.sit].name;
+    $('rEra').textContent = s.era;
+    $('rF0').textContent = s.flags[0]; $('rF1').textContent = s.flags[1]; $('rF2').textContent = s.flags[2];
+    $('rNum').textContent = r.num;
+    $('rDot').style.background = s.swatch;
+    $('rColour').textContent = s.colour;
+    $('rDay').textContent = r.day;
+    $('rFriend').textContent = s.friend;
+    var tb = $('rTruths'); tb.innerHTML = '';
+    TR[r.top].forEach(function (t, i) { var f = document.createElement('div'); f.className = 'flag'; var pp = document.createElement('p'); pp.textContent = ['👀 ', '😭 ', '💀 '][i] + 'tu wo insaan h jo ' + (i ? '' : '') + t; f.appendChild(pp); tb.appendChild(f); });
+    $('rReview').textContent = s.review; $('rAudio').textContent = s.audio; $('rText').textContent = s.text;
+
+    var text = '🪔 ' + (nm ? nm + ' is' : 'main') + ' a ' + s.name + '. ' + s.tag + '\n' +
+      'my 2027 era: ' + s.era + '\n' +
+      (ok ? 'guess sahi nikla 🎯' : 'maine ' + SW[guess].name + ' guess kiya tha. delulu 😭') + '\n' +
+      'ab tu bata: which mithai r u, fr? tag ur gc 👇\n#mithaiaura #diwali #aurachallenge\n' + SITE;
+    lastText = text;
+    $('copy').onclick = function () { copyText(text); };
+    $('status').textContent = '';
+    show('s-result', 'rHead');
+    fitShare();
+    burst();
+    finalShot = null; setTimeout(prebuild, 900);
+  }
+
+  function fitShare() {
+    var w = $('shareWrap'), k = Math.min(1, w.clientWidth / 400);
+    if (!w.clientWidth) return;
+    $('card4').style.setProperty('--k', k); w.style.height = Math.round(711 * k) + 'px';
+  }
+  window.addEventListener('resize', fitShare);
+
+  function copyText(text) {
+    function done(ok) { $('status').textContent = ok ? 'copied. paste it in ur caption.' : 'copy is blocked here. screenshot the slides instead.'; }
+    function fallback() {
+      var ta = document.createElement('textarea'), ok = false;
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+    } else fallback();
+  }
+
+  function burst() {
+    if (RM) return;
+    var c = $('fx'), ctx = c.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1);
+    var w = window.innerWidth, h = window.innerHeight;
+    c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var cols = ['#FFE066', '#FF4D8D', '#FF7A1A', '#B79CFF', '#7CFFB2', '#FFFFFF'], ps = [], i;
+    for (i = 0; i < 120; i++) {
+      var a = Math.random() * Math.PI * 2, sp = 3 + Math.random() * 8;
+      ps.push({ x: w / 2, y: h * .3, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 3, life: 1, d: .008 + Math.random() * .012, c: cols[Math.floor(Math.random() * cols.length)], w: 5 + Math.random() * 6, rot: Math.random() * 6, vr: (Math.random() - .5) * .3 });
+    }
+    (function frame() {
+      var alive = false;
+      ctx.clearRect(0, 0, w, h);
+      ps.forEach(function (p) {
+        if (p.life <= 0) return;
+        alive = true;
+        p.x += p.vx; p.y += p.vy; p.vy += .13; p.vx *= .985; p.life -= p.d; p.rot += p.vr;
+        ctx.save(); ctx.globalAlpha = Math.max(0, p.life); ctx.fillStyle = p.c;
+        ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillRect(-p.w / 2, -p.w / 4, p.w, p.w / 2); ctx.restore();
+      });
+      if (alive) requestAnimationFrame(frame); else ctx.clearRect(0, 0, w, h);
+    })();
+  }
+
+  function begin() {
+    name = $('name').value || '';
+    idx = 0; answers = []; guess = '';
+    renderQ();
+  }
+
+  $('start').addEventListener('click', begin);
+  $('name').addEventListener('keydown', function (e) { if (e.key === 'Enter') begin(); });
+  $('back').addEventListener('click', function () { if (idx > 0) { idx--; renderQ(); } });
+  $('again').addEventListener('click', function () { show('s-intro', 'introTitle'); });
+
+
+  /* ---------- share: only the final card (slide 4) -> png -> share sheet ---------- */
+  function snap(el) {
+    return html2canvas(el, { scale: 1080 / el.offsetWidth, backgroundColor: null, useCORS: true, logging: false,
+      onclone: function (d) { var st = d.createElement('style'); st.textContent = '.card::after,.card::before{display:none!important}.stk svg{filter:none!important}.card{animation:none!important}.card.share{transform:none!important}.sharewrap{overflow:visible!important;height:auto!important}'; d.head.appendChild(st); } })
+      .then(function (c) { return new Promise(function (res) { c.toBlob(function (b) { res({ blob: b, url: URL.createObjectURL(b), file: new File([b], 'mithai-aura.png', { type: 'image/png' }) }); }, 'image/png'); }); });
+  }
+  function prebuild() {
+    if (!window.html2canvas) return null;
+    if (!finalShot) finalShot = snap($('card4')).catch(function () { finalShot = null; return null; });
+    return finalShot;
+  }
+  function openSheet(x) {
+    var box = $('sheetImgs'); box.innerHTML = '';
+    var im = new Image(); im.src = x.url; im.alt = 'ur aura card'; box.appendChild(im);
+    shots = [x]; $('sheet').hidden = false;
+  }
+  function shareFinal(target) {
+    var st = $('status');
+    try { if (navigator.clipboard) navigator.clipboard.writeText(lastText); } catch (e) {}
+    var pr = prebuild();
+    if (!pr) { st.textContent = 'card export load nahi hua. slide 4 ka screenshot le lo 📸'; return; }
+    st.textContent = 'card ready ho raha h… 1 sec';
+    pr.then(function (x) {
+      st.textContent = '';
+      if (!x) { st.textContent = 'export fail. slide 4 ka screenshot le lo 📸'; return; }
+      if (navigator.canShare && navigator.canShare({ files: [x.file] })) {
+        navigator.share({ files: [x.file], text: lastText }).catch(function (e) { if (!e || e.name !== 'AbortError') openSheet(x); });
+      } else if (target === 'wa') {
+        window.open('https://wa.me/?text=' + encodeURIComponent(lastText), '_blank');
+        openSheet(x);
+      } else openSheet(x);
+    });
+  }
+  $('ig').addEventListener('click', function () { shareFinal('ig'); });
+  $('wa').addEventListener('click', function () { shareFinal('wa'); });
+  $('closeSheet').addEventListener('click', function () { $('sheet').hidden = true; });
+  $('copy2').addEventListener('click', function () { copyText(lastText); });
+  $('dlAll').addEventListener('click', function () {
+    shots.forEach(function (x) { var a = document.createElement('a'); a.href = x.url; a.download = 'mithai-aura.png'; document.body.appendChild(a); a.click(); document.body.removeChild(a); });
+  });
+
+  buildStatic();
+})();
+</script>
+
+</body></html>
