@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <path d="M0 0h24v630H0zM1176 0h24v630h-24z" fill="#0000ff"/>
+  <text x="88" y="150" fill="#0000ff" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="5">Theeditroom Labs</text>
+  <text x="82" y="335" fill="#0000ff" font-family="Arial, Helvetica, sans-serif" font-size="84" font-weight="700" letter-spacing="-5">Make good happen.</text>
+  <text x="88" y="410" fill="#3c3c99" font-family="Arial, Helvetica, sans-serif" font-size="29">AI systems · Digital products · Standout brands · Growth</text>
+  <path d="M88 500h1024" stroke="#0000ff" stroke-opacity=".2" stroke-width="2"/>
+  <text x="88" y="550" fill="#3c3c99" font-family="Arial, Helvetica, sans-serif" font-size="20">theeditroomlabs.vercel.app</text>
+</svg>
